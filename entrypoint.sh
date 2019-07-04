@@ -28,6 +28,8 @@ done
 # using perl instead of sed here, because sed fails miserably with new lines and slashes
 perl -i.bak -pe 's/LOCATIONS/$ENV{"LOCATIONS"}/g' /etc/apache2/sites-available/default-site.conf
 
+sed -i 's!SSL_ENGINE!'${SSL_ENGINE:-off}'!g' /etc/apache2/sites-available/default-site.conf
+
 a2enmod proxy && a2enmod proxy_http && a2enmod ssl && a2enmod auth_openidc
 
 a2ensite default-site
