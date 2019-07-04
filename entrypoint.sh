@@ -30,6 +30,12 @@ perl -i.bak -pe 's/LOCATIONS/$ENV{"LOCATIONS"}/g' /etc/apache2/sites-available/d
 
 sed -i 's!SSL_ENGINE!'${SSL_ENGINE:-off}'!g' /etc/apache2/sites-available/default-site.conf
 
+if [ "$SSL_ENGINE" == "on" ]; then
+    sed -i 's!SSL_COMMENT!!g' /etc/apache2/sites-available/default-site.conf
+else
+    sed -i 's!SSL_COMMENT!#!g' /etc/apache2/sites-available/default-site.conf
+fi
+
 a2enmod proxy && a2enmod proxy_http && a2enmod ssl && a2enmod auth_openidc
 
 a2ensite default-site
