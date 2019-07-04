@@ -14,6 +14,24 @@ sed -i 's!SCOPES!'${SCOPES}'!g' /etc/apache2/sites-available/default-site.conf
 sed -i 's!REMOTE_USER_CLAIM!'${REMOTE_USER_CLAIM:-sub}'!g' /etc/apache2/sites-available/default-site.conf
 sed -i 's!REQUEST_FIELD_SIZE!'${REQUEST_FIELD_SIZE:-65536}'!g' /etc/apache2/sites-available/default-site.conf
 
+export LOCATIONS=""
+IFS=',' read -ra PRS <<< "$PROTECTED_RESOURCES"
+for PR in "${PRS[@]}"; do
+    export LOCATIONS=$LOCATIONS"		<Location $PR>
+    			AuthType openid-connect
+    			Require valid-user
+    		</Location>
+
+        "
+done
+
+echo $LOCATIONS
+
+# using perl instead of sed here, because sed fails miserably with new lines and slashes
+perl -i.bak -pe 's/LOCATIONS/$ENV{"LOCATIONS"}/g' /etc/apache2/sites-available/default-site.conf
+
+cat /etc/apache2/sites-available/default-site.conf
+
 a2enmod proxy && a2enmod proxy_http && a2enmod ssl && a2enmod auth_openidc
 
 a2ensite default-site
