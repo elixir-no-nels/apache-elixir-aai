@@ -5,7 +5,7 @@ Docker image of a reverse-proxy with AAI authentication component, specifically 
 
 Sample `docker-compose.yml` file:
 
-```
+```yaml
 version: "3.7"
 
 services:
