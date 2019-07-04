@@ -25,12 +25,8 @@ for PR in "${PRS[@]}"; do
         "
 done
 
-echo $LOCATIONS
-
 # using perl instead of sed here, because sed fails miserably with new lines and slashes
 perl -i.bak -pe 's/LOCATIONS/$ENV{"LOCATIONS"}/g' /etc/apache2/sites-available/default-site.conf
-
-cat /etc/apache2/sites-available/default-site.conf
 
 a2enmod proxy && a2enmod proxy_http && a2enmod ssl && a2enmod auth_openidc
 
