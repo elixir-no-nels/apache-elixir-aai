@@ -32,9 +32,9 @@ if [ "$SSL_ENGINE" == "on" ]; then
     sed -i 's!SERVER_PORT!443!g' /etc/apache2/sites-available/default-site.conf
     export REDIRECT_SECTION="
     <VirtualHost *:80>
-      ServerName SERVER_NAME
+      ServerName $SERVER_NAME
       DocumentRoot /var/www/html
-      Redirect permanent / https://SERVER_NAME
+      Redirect permanent / https://$SERVER_NAME
     </VirtualHost>
         "
     # using perl instead of sed here, because sed fails miserably with new lines and slashes
