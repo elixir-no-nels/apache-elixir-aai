@@ -1,8 +1,6 @@
 #!/bin/bash
 
-sed -i 's!SERVER_ADMIN!'${SERVER_ADMIN}'!g' /etc/apache2/sites-available/default-site.conf
-sed -i 's!SERVER_URL!'${SERVER_URL}'!g' /etc/apache2/sites-available/default-site.conf
-sed -i 's!SERVER_PORT!'${SERVER_PORT}'!g' /etc/apache2/sites-available/default-site.conf
+sed -i 's!SERVER_NAME!'${SERVER_NAME}'!g' /etc/apache2/sites-available/default-site.conf
 sed -i 's!PROXY_PASS!'${PROXY_PASS}'!g' /etc/apache2/sites-available/default-site.conf
 sed -i 's!METADATA_REFRESH_INTERVAL!'${METADATA_REFRESH_INTERVAL:-3600}'!g' /etc/apache2/sites-available/default-site.conf
 sed -i 's!ELIXIR_AAI_CLIENT_ID!'${ELIXIR_AAI_CLIENT_ID}'!g' /etc/apache2/sites-available/default-site.conf
@@ -31,8 +29,20 @@ perl -i.bak -pe 's/LOCATIONS/$ENV{"LOCATIONS"}/g' /etc/apache2/sites-available/d
 sed -i 's!SSL_ENGINE!'${SSL_ENGINE:-off}'!g' /etc/apache2/sites-available/default-site.conf
 
 if [ "$SSL_ENGINE" == "on" ]; then
+    sed -i 's!SERVER_PORT!443!g' /etc/apache2/sites-available/default-site.conf
+    export REDIRECT_SECTION="
+    <VirtualHost *:80>
+      ServerName SERVER_NAME
+      DocumentRoot /var/www/html
+      Redirect permanent / https://SERVER_NAME
+    </VirtualHost>
+        "
+    # using perl instead of sed here, because sed fails miserably with new lines and slashes
+    perl -i.bak -pe 's/REDIRECT_COMMENT/$ENV{"REDIRECT_SECTION"}/g' /etc/apache2/sites-available/default-site.conf
     sed -i 's!SSL_COMMENT!!g' /etc/apache2/sites-available/default-site.conf
 else
+    sed -i 's!SERVER_PORT!80!g' /etc/apache2/sites-available/default-site.conf
+    sed -i 's!REDIRECT_COMMENT!!g' /etc/apache2/sites-available/default-site.conf
     sed -i 's!SSL_COMMENT!#!g' /etc/apache2/sites-available/default-site.conf
 fi
 
