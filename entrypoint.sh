@@ -34,7 +34,7 @@ if [ "$SSL_ENGINE" == "on" ]; then
     <VirtualHost *:80>
       ServerName $SERVER_NAME
       DocumentRoot /var/www/html
-      Redirect permanent / https://$SERVER_NAME
+      Redirect permanent / https://$SERVER_NAME/
     </VirtualHost>
         "
     # using perl instead of sed here, because sed fails miserably with new lines and slashes
