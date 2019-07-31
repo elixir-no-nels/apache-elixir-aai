@@ -46,7 +46,7 @@ else
     sed -i 's!SSL_COMMENT!#!g' /etc/apache2/sites-available/default-site.conf
 fi
 
-a2enmod proxy && a2enmod proxy_http && a2enmod ssl && a2enmod auth_openidc
+a2enmod proxy && a2enmod proxy_http && a2enmod ssl && a2enmod headers && a2enmod auth_openidc
 
 a2ensite default-site
 
