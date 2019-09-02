@@ -22,7 +22,7 @@ services:
       - PROXY_PASS=http://<internal to Docker domain name>:<internal to Docker port>/
       - ELIXIR_AAI_CLIENT_ID=<your Elixir AAI Client ID>
       - ELIXIR_AAI_CLIENT_SECRET=<your Elixir AAI Client Secret>
-      - SCOPES="openid, profile, email" # add more scopes according to your Elixir AAI Client configuration
+      - SCOPES="openid profile email" # add more scopes according to your Elixir AAI Client configuration
       - PROTECTED_RESOURCES=/<my protected resource 1>,/<my protected resource 2>
 #      - SSL_ENGINE=on
 #    volumes:
