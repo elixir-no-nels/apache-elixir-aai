@@ -17,6 +17,7 @@ for PR in "${PRS[@]}"; do
     export LOCATIONS=$LOCATIONS"		<Location $PR>
     			AuthType openid-connect
     			Require valid-user
+                OIDCUnAuthAction auth
     		</Location>
 
         "
