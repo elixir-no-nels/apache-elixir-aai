@@ -31,4 +31,4 @@ services:
 
 ```
 
-Last for lines should be uncommented if you want to run Apache over HTTPS.
+Last four lines should be uncommented if you want to run Apache over HTTPS.
