@@ -1,4 +1,7 @@
 # What it is?
+![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/nels/apache-elixir-aai)
+![Docker Pulls](https://img.shields.io/docker/pulls/nels/apache-elixir-aai)
+
 Docker image of a reverse-proxy with AAI authentication component, specifically configured to work with Elixir AAI.
 
 # Usage
